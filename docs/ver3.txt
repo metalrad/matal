@@ -1,53 +1,115 @@
-#define _CRT_SECURE_NO_WARNINGS #include[stdio.h] #include[math.h] #define N 4 #define EPSILON 1.0E-5 #define TRUE 1 #define FALSE 0
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+#define N 4 
+#define EPSILON 1.0E-5
+#define TRUE 1
+#define FALSE 0
 
-int sweep( double a[N][N], double b[N], double x[N] ); void swap(double *wk1,double *wk2); int main() { int i,j; //int sw=0;
-
-double a[N][N]={[2,3,1],[4,1,-3],[-1,2,1]};//¶•Ó double x[N],b[N]={2,3,4};//‰E•Ó int sw;
-
-printf("=== ŒW”s—ñ‚Æ’è” ==="); for(i=0;i<N;i++); { for(j=0;j<N;i++){ printf("%10.4f",a[i][j]); } printf("10.4f\n\n",b[i]);
-
-} sw=TRUE;
-
-sweep(&a[N][N],&b[N],&x[N]);
-
-if(sw==TRUE) { printf("\n\n === ‘|o–@‚É‚æ‚é˜A—§ˆêŸ•û’ö®‚Ì‰ğ ===\n\n"); for(i=0;i<N;i++) printf("x[%d] = %10.4f\n",i+1,x[i]);
-
-} else { printf("‰ğ‚Í‹‚ß‚ç‚ê‚Ü‚¹‚ñ‚Å‚µ‚½\n\n"); }
-
-return 0; }
-
-void swap(double *wk1,double *wk2) { //double wk1,wk2; double w; w=*wk1; *wk1=*wk2; *wk2=w; } int sweep(double a[N][N], double b[N], double x[N]) { int i,j,k,ik; double ak,aik,ww; int sw;
-
-for(k=0;k<N;k++)
+	
+int sweep( double a[N][N], double b[N], double x[N] );
+void swap(double *wk1,double *wk2);
+int main()
 {
-	ak=a[k][k];
+	int i,j;
+	//int sw=0;
 
-if(fabs(ak)<=EPSILON)
-{
-ik=k+1;
-while((ik<N)&&(fabs(a[ik][k])<EPSILON)) ik++;
-if(ik<N)
-{
-	for(j=k;j<N;j++) {swap(&a[k][j],&a[ik][j]);}
-	swap(&b[k],&b[ik]);
-	ak=a[k][k];
+	double a[N][N]={{2,3,1},{4,1,-3},{-1,2,1}};//å·¦è¾º
+	double x[N],b[N]={2,3,4};//å³è¾º
+	int sw;
+	
+
+	printf("=== ä¿‚æ•°è¡Œåˆ—ã¨å®šæ•° ===");
+	for(i=0;i<N;i++);
+	{
+		for(j=0;j<N;i++){ printf("%10.4f",a[i][j]);	}
+		printf("10.4f\n\n",b[i]);
+	
+	}
+	sw=TRUE;
+
+	sweep(&a[N][N],&b[N],&x[N]);
+
+	if(sw==TRUE)
+	{
+		printf("\n\n === æƒå‡ºæ³•ã«ã‚ˆã‚‹é€£ç«‹ä¸€æ¬¡æ–¹ç¨‹å¼ã®è§£ ===\n\n");
+		for(i=0;i<N;i++) printf("x[%d] = %10.4f\n",i+1,x[i]);
+	
+	}
+	else
+	{
+		printf("è§£ã¯æ±‚ã‚ã‚‰ã‚Œã¾ã›ã‚“ã§ã—ãŸ\n\n");
+	}
+
+
+	return 0;
+
 }
-else
+
+void swap(double *wk1,double *wk2)
 {
-	printf("ƒsƒ{ƒbƒg‚ª0‚Å‚·\n");
-	sw=FALSE;
-	goto owari;
+	//double wk1,wk2;
+	double w;
+	w=*wk1; *wk1=*wk2; *wk2=w;
 }
-} for(j=k;j<N;j++) a[k][j]=a[k][j]/ak; b[k]=b[k]/ak; for(i=0;i<N;i++) { if(i!=k) { aik=a[i][k]; for(j=k;j<N;j++) a[i][j]=a[i][j]-aik*a[k][j]; b[i]=b[i]-b[k]*aik; } }
+int sweep(double a[N][N], double b[N], double x[N])
+	{
+		int i,j,k,ik;
+		double ak,aik,ww;
+		int sw;
+		
+		for(k=0;k<N;k++)
+		{
+			ak=a[k][k];
 
+		if(fabs(ak)<=EPSILON)
+		{
+		ik=k+1;
+		while((ik<N)&&(fabs(a[ik][k])<EPSILON)) ik++;
+		if(ik<N)
+		{
+			for(j=k;j<N;j++) {swap(&a[k][j],&a[ik][j]);}
+			swap(&b[k],&b[ik]);
+			ak=a[k][k];
+		}
+		else
+		{
+			printf("ãƒ”ãƒœãƒƒãƒˆãŒ0ã§ã™\n");
+			sw=FALSE;
+			goto owari;
+		}
+	}
+	for(j=k;j<N;j++) a[k][j]=a[k][j]/ak;
+	b[k]=b[k]/ak;
+	for(i=0;i<N;i++)
+	{
+	if(i!=k)
+	{
+		aik=a[i][k];
+		for(j=k;j<N;j++) a[i][j]=a[i][j]-aik*a[k][j];
+		b[i]=b[i]-b[k]*aik;
+	}
+}
+		
 }
 
-for(k=0;k<N;k++) x[k]=b[k]; owari:;
+for(k=0;k<N;k++) 
+	x[k]=b[k];
+owari:;
 
 return (int)ak;
 
 }
 
-yÀsz –³ŒÀÀsc
+ã€å®Ÿè¡Œã€‘ ç„¡é™å®Ÿè¡Œâ€¦
 
-yƒGƒ‰[z 1>------ ƒrƒ‹ƒhŠJn: ƒvƒƒWƒFƒNƒg: itijihouteisiki, \¬: Debug Win32 ------ 1>C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.Targets(983,5): warning MSB3644: ƒtƒŒ[ƒ€ƒ[ƒN ".NETFramework,Version=v4.0" ‚ÌQÆƒAƒZƒ“ƒuƒŠ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B‚±‚ê‚ğ‰ğŒˆ‚·‚é‚É‚ÍA‚±‚ÌƒtƒŒ[ƒ€ƒ[ƒN ƒo[ƒWƒ‡ƒ“‚Ì SDK ‚Ü‚½‚Í Targeting Pack ‚ğƒCƒ“ƒXƒg[ƒ‹‚·‚é‚©ASDK ‚Ü‚½‚Í Targeting Pack ‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚¢‚éƒtƒŒ[ƒ€ƒ[ƒN‚Ìƒo[ƒWƒ‡ƒ“‚ÉƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğÄƒ^[ƒQƒbƒg‚µ‚Ä‚­‚¾‚³‚¢BƒAƒZƒ“ƒuƒŠ‚ÍƒOƒ[ƒoƒ‹ ƒAƒZƒ“ƒuƒŠ ƒLƒƒƒbƒVƒ… (GAC) ‚©‚ç‰ğŒˆ‚³‚êAQÆƒAƒZƒ“ƒuƒŠ‚Ì‘ã‚í‚è‚Ég—p‚³‚ê‚é‚½‚ßAƒAƒZƒ“ƒuƒŠ‚ª–Ú“I‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚É³‚µ‚­ƒ^[ƒQƒbƒg‚³‚ê‚È‚¢ê‡‚à‚ ‚è‚Ü‚·B 1> kadai2.c 1>c:\users\owner\desktop\‰“Šuö‹Æ(‚Æ‰Û‘è)\‰Û‘è\”’l‰ğÍ\itijihouteisiki\itijihouteisiki\kadai2.c(31): warning C4047: 'ŠÖ”' : ŠÔÚQÆ‚ÌƒŒƒxƒ‹‚ª 'double (*)[4]' ‚Æ 'double *' ‚ÅˆÙ‚È‚Á‚Ä‚¢‚Ü‚·B 1>c:\users\owner\desktop\‰“Šuö‹Æ(‚Æ‰Û‘è)\‰Û‘è\”’l‰ğÍ\itijihouteisiki\itijihouteisiki\kadai2.c(31): warning C4024: 'sweep' : ‚ÌŒ^‚ª 1 ‚Ì‰¼ˆø”‚¨‚æ‚ÑÀˆø”‚ÆˆÙ‚È‚è‚Ü‚·B 1>c:\users\owner\desktop\‰“Šuö‹Æ(‚Æ‰Û‘è)\‰Û‘è\”’l‰ğÍ\itijihouteisiki\itijihouteisiki\kadai2.c(58): warning C4101: 'ww' : ƒ[ƒJƒ‹•Ï”‚Í 1 “x‚àg‚í‚ê‚Ä‚¢‚Ü‚¹‚ñB 1> itijihouteisiki.vcxproj -> C:\Users\owner\Desktop\‰“Šuö‹Æ(‚Æ‰Û‘è)\‰Û‘è\”’l‰ğÍ\itijihouteisiki\Debug\itijihouteisiki.exe ========== ƒrƒ‹ƒh: 1 ³íI—¹A0 ¸”sA0 XV•s—vA0 ƒXƒLƒbƒv ==========
+ã€ã‚¨ãƒ©ãƒ¼ã€‘
+
+1>------ ãƒ“ãƒ«ãƒ‰é–‹å§‹: ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ: itijihouteisiki, æ§‹æˆ: Debug Win32 ------
+1>C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.Targets(983,5): warning MSB3644: ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ ".NETFramework,Version=v4.0" ã®å‚ç…§ã‚¢ã‚»ãƒ³ãƒ–ãƒªãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚ã“ã‚Œã‚’è§£æ±ºã™ã‚‹ã«ã¯ã€ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã® SDK ã¾ãŸã¯ Targeting Pack ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹ã‹ã€SDK ã¾ãŸã¯ Targeting Pack ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã—ã¦ãã ã•ã„ã€‚ã‚¢ã‚»ãƒ³ãƒ–ãƒªã¯ã‚°ãƒ­ãƒ¼ãƒãƒ« ã‚¢ã‚»ãƒ³ãƒ–ãƒª ã‚­ãƒ£ãƒƒã‚·ãƒ¥ (GAC) ã‹ã‚‰è§£æ±ºã•ã‚Œã€å‚ç…§ã‚¢ã‚»ãƒ³ãƒ–ãƒªã®ä»£ã‚ã‚Šã«ä½¿ç”¨ã•ã‚Œã‚‹ãŸã‚ã€ã‚¢ã‚»ãƒ³ãƒ–ãƒªãŒç›®çš„ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã«æ­£ã—ãã‚¿ãƒ¼ã‚²ãƒƒãƒˆã•ã‚Œãªã„å ´åˆã‚‚ã‚ã‚Šã¾ã™ã€‚
+1>  kadai2.c
+1>c:\users\owner\desktop\é éš”æˆæ¥­(ã¨èª²é¡Œ)\èª²é¡Œ\æ•°å€¤è§£æ\itijihouteisiki\itijihouteisiki\kadai2.c(31): warning C4047: 'é–¢æ•°' : é–“æ¥å‚ç…§ã®ãƒ¬ãƒ™ãƒ«ãŒ 'double (*)[4]' ã¨ 'double *' ã§ç•°ãªã£ã¦ã„ã¾ã™ã€‚
+1>c:\users\owner\desktop\é éš”æˆæ¥­(ã¨èª²é¡Œ)\èª²é¡Œ\æ•°å€¤è§£æ\itijihouteisiki\itijihouteisiki\kadai2.c(31): warning C4024: 'sweep' : ã®å‹ãŒ 1 ã®ä»®å¼•æ•°ãŠã‚ˆã³å®Ÿå¼•æ•°ã¨ç•°ãªã‚Šã¾ã™ã€‚
+1>c:\users\owner\desktop\é éš”æˆæ¥­(ã¨èª²é¡Œ)\èª²é¡Œ\æ•°å€¤è§£æ\itijihouteisiki\itijihouteisiki\kadai2.c(58): warning C4101: 'ww' : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã¯ 1 åº¦ã‚‚ä½¿ã‚ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
+1>  itijihouteisiki.vcxproj -> C:\Users\owner\Desktop\é éš”æˆæ¥­(ã¨èª²é¡Œ)\èª²é¡Œ\æ•°å€¤è§£æ\itijihouteisiki\Debug\itijihouteisiki.exe
+========== ãƒ“ãƒ«ãƒ‰: 1 æ­£å¸¸çµ‚äº†ã€0 å¤±æ•—ã€0 æ›´æ–°ä¸è¦ã€0 ã‚¹ã‚­ãƒƒãƒ— ==========
