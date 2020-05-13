@@ -23,7 +23,3 @@
 [testページ](./test.html) 
 
 
-【コード】
-
-[Cページ](./c.html) 
-[Cページ](./c1.html) 
